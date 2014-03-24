@@ -1,4 +1,0 @@
-B-SH
-====
-
-battleships
