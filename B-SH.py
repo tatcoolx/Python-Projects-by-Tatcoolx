@@ -1,7 +1,7 @@
 #-*-coding: UTF-8-*-
 from random import randint
 #03.set variables
-width_min=4 
+width_min=2
 width_max=9
 def str_to_int(a):
     str_to_int_output=""
@@ -64,18 +64,23 @@ def print_board(board):
     print width_column_text
     print
 #62.amount of ships and ships list, empty
-ship_number=0
+ships_number=0
 ships={0:"STEALTH"}
-for i in range(0,width-(width_min-1)):
-    ship_number+=randint(3,5)
-print "There are "+str(ship_number)+" ships in the field!"
+for i in range(0,width-(width_min+2)):
+    ships_number+=randint(3,5)
+if width==2:
+    ships_number=1
+if width==3:
+    ships_number=randint(1,3)
+print "There are "+str(ships_number)+" ships in the field!"
+ships_dead=ships_number
 #68.filling ships list
-for i in range(ship_number):
+for i in range(ships_number):
     ships[i+1]=[str(i+1)]
 #71.goal, maximum score and scores list, empty
 scores=[0,0,0]
 maxscore=0
-winscore=int(ship_number/2+1)
+winscore=int(ships_number/2+1)
 print "Player with "+str(winscore)+" scores wins the game!"
 print
 #77.#first player to play by roll
@@ -93,7 +98,7 @@ def random_col(board):
 #89. set turn
 turn=1
 #91. place ships in the field
-for i in range(ship_number):
+for i in range(ships_number):
     print
 ship_row = random_row(board)
 ship_col = random_col(board)
@@ -119,15 +124,19 @@ while winscore>maxscore:
     elif guess_row == ship_row and guess_col == ship_col:
         board[guess_row][guess_col] = "$"
         print_board(board)
-        print "Congratulations! You sunk the battleship!"
-        score[currentplayer]+=1
-        print str(player[currentplayer])+" got +1 score."
-        raw_input("Press ENTERT to continue...")
+        print "You sunk the battleship!"
+        scores[currentplayer]+=1
+        raw_input(str(player[currentplayer])+" got +1 score.")
+        ships_dead-=1
+        if maxscore<scores[currentplayer]:
+            maxscore=scores[currentplayer]
+            maxscore_owner=currentplayer
+        if winscore<=maxscore:
+            break
     else:
         board[guess_row][guess_col] = "X"
         print_board(board)
         raw_input("You missed")
-    turn+=1
     print
     for i in range(1,3):
         print str(player[i])+": "+str(scores[i])+" scores"
@@ -135,7 +144,9 @@ while winscore>maxscore:
         currentplayer=2
     else:
         currentplayer=1
+    turn+=1
     print 
     raw_input("Press ENTERT to continue...")
     print ("*"*40)
+
 print "win"
