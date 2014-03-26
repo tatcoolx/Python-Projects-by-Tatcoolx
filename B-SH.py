@@ -1,6 +1,7 @@
 #-*-coding: UTF-8-*-
 from random import randint
 #03.set variables
+draw=False
 width_min=2
 width_max=9
 def str_to_int(a):
@@ -10,13 +11,14 @@ def str_to_int(a):
             if a[i]==str(b):
                 str_to_int_output+=a[i]
     return int(str_to_int_output)
-#13.welcoming
+#14.welcoming
 print
 print "Let's play Battleship!"
 print
-#17.players list, empty
+#18.players list, empty
 player=["AI"]
-#19.set players name 
+maxscore_owner=0
+#21.set players name 
 for i in range(2):
     name=str(raw_input("Enter name for Player "+str(i+1)+":"))
     if len(name)==0:
@@ -25,9 +27,9 @@ for i in range(2):
     print
     print "Welcome "+name+"!!!"
     print
-#28.field as list of lists, empty
+#30.field as list of lists, empty
 board = []
-#30.set width for field and fill it 
+#32.set width for field and fill it 
 width=str(raw_input("Enter field width("+str(width_min)+"-"+str(width_max)+"):"))
 if width=="444" or width=="777":
     if width=="444":
@@ -51,7 +53,7 @@ else:
 print "Field width is "+str(width)+"x"+str(width)+"."
 for x in range(width):
     board.append(["#"] * width)
-#50.f for field and field lines display with space symbol between elements
+#56.f for field and field lines display with space symbol between elements
 def print_board(board):
     print
     width_column_text="  "
@@ -63,7 +65,7 @@ def print_board(board):
         print str(i+1)+" "+" ".join(board[i])+" "+str(i+1)
     print width_column_text
     print
-#62.amount of ships and ships list, empty
+#68.amount of ships and ships list, empty
 ships_number=0
 ships={0:"STEALTH"}
 for i in range(0,width-(width_min+2)):
@@ -74,35 +76,35 @@ if width==3:
     ships_number=randint(1,3)
 print "There are "+str(ships_number)+" ships in the field!"
 ships_dead=ships_number
-#68.filling ships list
+#79.filling ships list
 for i in range(ships_number):
     ships[i+1]=[str(i+1)]
-#71.goal, maximum score and scores list, empty
+#82.goal, maximum score and scores list, empty
 scores=[0,0,0]
 maxscore=0
 winscore=int(ships_number/2+1)
 print "Player with "+str(winscore)+" scores wins the game!"
 print
-#77.#first player to play by roll
+#88.#first player to play by roll
 currentplayer=randint(1,2)
 print "Game starts with "+player[currentplayer]+"!"
 print
 raw_input("Press ENTER to start!")
 for i in range(15):
     print
-#84. set f for ships placement
+#95. set f for ships placement
 def random_row(board):
     return randint(0, len(board) - 1)
 def random_col(board):
     return randint(0, len(board[0]) - 1)
-#89. set turn
+#100. set turn
 turn=1
-#91. place ships in the field
+#102. place ships in the field
 for i in range(ships_number):
     print
 ship_row = random_row(board)
 ship_col = random_col(board)
-#96.game
+#107.game
 while winscore>maxscore:
     if turn>1:
         for i in range(20):
@@ -133,6 +135,9 @@ while winscore>maxscore:
             maxscore_owner=currentplayer
         if winscore<=maxscore:
             break
+        if ships_dead==0:
+            draw=True
+            break
     else:
         board[guess_row][guess_col] = "X"
         print_board(board)
@@ -148,5 +153,8 @@ while winscore>maxscore:
     print 
     raw_input("Press ENTERT to continue...")
     print ("*"*40)
-
-print "win"
+if draw==True:
+    raw_input("Not BAD and not GOOD but DRAW!!!")
+else:
+    print str(player[maxscore_owner])+" has won!!!!"
+    raw_input(str(player[3-maxscore_owner])+" is FUCKING LOSER!!!!!!1111")
