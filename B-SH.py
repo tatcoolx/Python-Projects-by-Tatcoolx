@@ -1,9 +1,10 @@
 #-*-coding: UTF-8-*-
-from random import randint
+import random,string
 #03.set variables
 draw=False
 width_min=2
-width_max=9
+width_max=5
+#07. takes all digits in str and stacks them.
 def str_to_int(a):
     str_to_int_output=""
     for i in range(len(a)):
@@ -11,6 +12,15 @@ def str_to_int(a):
             if a[i]==str(b):
                 str_to_int_output+=a[i]
     return int(str_to_int_output)
+#16. Random name for bship
+def ship_id_gen(b=string.ascii_uppercase,c=string.digits):
+    id=random.choice(b)
+    id+=random.choice(b)
+    id+="-"
+    id+=random.choice(c)
+    return id
+for i in range(10):
+    print ship_id_gen()
 #14.welcoming
 print
 print "Let's play Battleship!"
@@ -43,7 +53,7 @@ if width=="444" or width=="777":
 for i in range(15):
     print
 if len(width)==0:
-    width=randint(width_min,width_max)
+    width=random.randint(width_min,width_max)
 else:
     width=str_to_int(width)
     if width>=width_max:
@@ -69,20 +79,20 @@ def print_board(board):
         print str(i+1)+" "+" ".join(board[i])+" "+str(i+1)
     print width_column_text_bot
     print
-#72.amount of ships and ships list, empty
+#72.amount of ships
 ships_number=0
-ships={0:"STEALTH"}
 for i in range(0,width-(width_min+2)):
-    ships_number+=randint(3,5)
+    ships_number+=random.randint(3,5)
 if width==2:
     ships_number=1
 if width==3:
-    ships_number=randint(1,3)
+    ships_number=random.randint(1,3)
 print "There are "+str(ships_number)+" ships in the field!"
 ships_dead=ships_number
-#83.filling ships list
+#83.filling ships lists
+ships_id={0:"STEALTH"}
 for i in range(ships_number):
-    ships[i+1]=[str(i+1)]
+    ships_id[i+1]=[str(i+1)]
 #86.goal, maximum score and scores list, empty
 scores=[0,0,0]
 maxscore=0
@@ -90,7 +100,7 @@ winscore=int(ships_number/2+1)
 print "Player with "+str(winscore)+" scores wins the game!"
 print
 #92.#first player to play by roll
-currentplayer=randint(1,2)
+currentplayer=random.randint(1,2)
 print "Game starts with "+player[currentplayer]+"!"
 print
 raw_input("Press ENTER to start!")
@@ -98,9 +108,9 @@ for i in range(15):
     print
 #99. set f for ships placement
 def random_row(board):
-    return randint(0, len(board) - 1)
+    return random.randint(0, len(board) - 1)
 def random_col(board):
-    return randint(0, len(board[0]) - 1)
+    return random.randint(0, len(board[0]) - 1)
 #104. set turn
 turn=1
 #106. place ships in the field
@@ -168,3 +178,24 @@ else:
     print str(player[maxscore_owner])+" has won!!!!"
     print
     raw_input(str(player[3-maxscore_owner])+" is FUCKING LOSER!!!!!!1111")
+
+
+
+import string,random
+def ship_id_gen(b=string.ascii_uppercase,c=string.digits):
+    id=random.choice(b)
+    id+=random.choice(b)
+    id+="-"
+    id+=random.choice(c)
+    return id
+
+
+ships_id={0:"STEALTH"}
+name=""
+for i in range(12):
+    while name==ships_id[i] and len(name)==0:
+        name+=random.choice("123")
+        name+=random.choice("123")
+        print str(i)+" has same name "+str(name)
+    ships_id[i+1]=name
+print ships_id
