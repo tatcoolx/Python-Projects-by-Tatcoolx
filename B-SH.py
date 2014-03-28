@@ -185,7 +185,7 @@ while winscore>maxscore:
         raw_input("Oops, that's not even in the ocean.")
     elif board[guess_row][guess_col] == "X":
         print_board(board)
-        raw_input("You guessed that one already.")
+        raw_input("You guessed that one already "coor_status[str(guess_row+1)+str(guess_col+1)]="X1")
     elif guess_row == ship_row and guess_col == ship_col:
         board[guess_row][guess_col] = "$"
         print_board(board)
@@ -203,6 +203,7 @@ while winscore>maxscore:
             break
     else:
         board[guess_row][guess_col] = "X"
+        coor_status[str(guess_row+1)+str(guess_col+1)]="X1"
         print_board(board)
         raw_input("You missed")
     print
