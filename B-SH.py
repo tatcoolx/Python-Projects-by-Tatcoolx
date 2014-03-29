@@ -72,9 +72,7 @@ print "Field width is "+str(width)+"x"+str(width)+"."
 for x in range(width):
     board.append(["#"] * width)
 #71.amount of ships
-ships_number=0
-for i in range(width-(width_min+1)):
-    ships_number+=width*width/3+random.randint(1,6)
+ships_number=((width*width/3)+random.randint(1,6))
 if width==2:
     ships_number=1
 if width==3:
@@ -130,7 +128,7 @@ for i in range(width):
                 coor_status[str(i+1)+str(x+1)]="empty"
 for i in ships_xy:
     if i>0:
-        coor_status[ships_xy[i]]="alive_ship"
+        coor_status[ships_xy[i]]="alive"+str(i)
 print coor_status
 #96. goal, maximum score and scores list, empty
 scores=[0,0,0]
@@ -151,6 +149,10 @@ turn=1
 for i in range(ships_number):
     print
 #WWW
+print ships_xy
+print ships_id
+print ships_status
+print coor_status
 #121.Top and Bottom lines with digits
 width_column_text_top="/ "
 width_column_text_bot="\ "
@@ -185,11 +187,11 @@ while winscore>maxscore:
         raw_input("Oops, that's not even in the ocean.")
     elif board[guess_row][guess_col] == "X":
         print_board(board)
-        raw_input("You guessed that one already "coor_status[str(guess_row+1)+str(guess_col+1)]="X1")
-    elif guess_row == ship_row and guess_col == ship_col:
+        raw_input("You guessed that one already. Times shooted: "+coor_status[str(guess_row+1)+str(guess_col+1)][1:]+".")
+    elif coor_status[str(guess_row+1)+str(guess_col+1)][:5]=="alive":
         board[guess_row][guess_col] = "$"
         print_board(board)
-        print "You sunk the battleship "+"X"+"!"
+        print "You sunk the battleship "+ship_id[coor_status[str(guess_row+1)+str(guess_col+1)][5:len(coor_status[str(guess_row+1)+str(guess_col+1)])]]+"!"
         scores[currentplayer]+=1
         raw_input(str(player[currentplayer])+" got +1 score.")
         ships_dead-=1
