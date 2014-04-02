@@ -47,6 +47,9 @@ def statistic():
     print "Corpse shots:         "+str(shot_dead[1])+(" "*(17-len(str(shot_dead[1]))))+str(shot_dead[2])+(" "*(15-len(str(shot_dead[2]))))
     print "Battleships destroyed:"+str(shot_kill[1])+(" "*(17-len(str(shot_kill[1]))))+str(shot_kill[2])+(" "*(15-len(str(shot_kill[2]))))
     print "Scores:               "+str(scores[1])+(" "*(17-len(str(scores[1]))))+str(scores[2])+(" "*(15-len(str(scores[2]))))
+    print
+    raw_input("Press ENTERT to continue...")
+    new_screen()
 #50. print a lot of empty strings
 def new_screen():
     for i in range(50):
@@ -281,4 +284,4 @@ if exit==False:
 		raw_input(str(player[3-maxscore_owner])+" is FUCKING LOSER!!!!!!1111")
 		statistic()
 new_screen()
-raw_input("Thanks for playing! Goodbye!")
+print "Thanks for playing! Goodbye!"
