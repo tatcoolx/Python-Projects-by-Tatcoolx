@@ -59,12 +59,16 @@ print
 print "Let's play Battleship!"
 print
 #58. players lists, empty
-player=["AI"]
-player_st=["AI"]
+player=["REMBO"]
+player_st=["REMBO"]
+player_bot=[False,False,False]
 maxscore_owner=0
 #62. set players name 
 for i in range(2):
-    name=str(raw_input("Enter name for Player "+str(i+1)+"(max 15):"))
+    name=str(raw_input("Enter name for Player "+str(i+1)+"(max 15 characters, or /"bot/" for A.I. contol):"))
+    if string.lower(name)=="bot":
+        name="Player "+str(i+1)+" A.I."
+        player_bot[i+1]=True
     if len(name)==0:
         name="Player "+str(i+1)
     elif len(name)>15:
@@ -202,8 +206,18 @@ while winscore>maxscore:
     raw_input("Turn "+str(turn)+" by "+str(player[currentplayer])+", press ENTER.")
     print_board(board)
     while True:
-        guess_row=raw_input("Guess Row:")
-        guess_col=raw_input("Guess Col:")
+        if player_bot[currentplayer]==False:
+            guess_row=raw_input("Guess Row:")
+            guess_col=raw_input("Guess Col:")
+        else:
+            guess_row=random.randint(1,width)-1
+            guess_col=random.randint(1,width)-1
+            if random_randint(0,100)<==6:
+                guess_row+=random.randint(-100,100)
+            if random_randint(0,100)<==6:
+                guess_row+=random.randint(-100,100)
+            if random_randint(0,100)<==3:
+                print "Should be kill bship!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
         if string.lower(guess_row)=="exit" or string.lower(guess_col)=="exit":
             exit=True
             break
@@ -213,17 +227,19 @@ while winscore>maxscore:
         else:
             if len(guess_row)==0:
                 guess_row=random.randint(1,width)-1
+                print "Randomly selected "+str(guess_row+1)+"."
             else:
                 guess_row=str_to_int(guess_row)-1
             if len(guess_col)==0:
                 guess_col=random.randint(1,width)-1
+                print "Randomly selected "+str(guess_col+1)+"."
             else:
-                guess_col=str_to_int(guess_col)-1
-            print "Randomly selected "+str(guess_row+1)+" and "+str(guess_col+1)+"."
+                guess_col=str_to_int(guess_col)-1            
             break
     if exit==True:
         break
     new_screen()
+    print "Shot to "+str(guess_row+1)+"-"+str(guess_row+1)+"."
     if (guess_row < 0 or guess_row > width-1) or (guess_col < 0 or guess_col > width-1):
         print_board(board)
         raw_input("Oops, that's not even in the ocean.")
