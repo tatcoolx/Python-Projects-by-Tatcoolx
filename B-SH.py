@@ -3,6 +3,7 @@ import random,string
 #03.set variables
 exit=False
 draw=False
+stat=False
 width_min=2
 width_max=9
 letters=""
@@ -32,6 +33,23 @@ def str_to_int(a):
             if len(str(str_to_int_output))==0:
                 str_to_int_output=0
             return int(str_to_int_output)
+#31. bot name generators and lists
+bot_id_pre=["SUPER","SIMPLE","EXTRA","BONUS","EASY","ONE","LONELY","SWEET"]
+bot_id_suf=["CODE","STRING","VIRUS","BRAIN","SCRIPT","GAME"]
+bot_id_dig=["","007","0101011","333","777","666","999","2000","1488","3000","9999"]
+def bot_id_gen():
+    id=bot_id_pre[random.randint(0,len(bot_id_pre))]
+    id+=bot_id_suf[random.randint(0,len(bot_id_suf))]
+    id+=bot_id_dig[random.randint(0,len(bot_id_dig))]
+    return id
+bot_id_pre2=["SUPER","SIMPLE","EXTRA","BONUS","EASY","ONE","LONELY","SWEET","ULTRA","BRUTAL","GREEN"]
+bot_id_suf2=["CODE","STRING","VIRUS","BRAIN","SCRIPT","GAME","DOMINATOR","LORD","TERMINAL","WIN32.Trojan"]
+bot_id_dig2=["","","","","","007","0101011","333","777","666","999","2000","1488","3000","9999"]
+def bot_id_gen2():
+    id=bot_id_pre2[random.randint(0,len(bot_id_pre2))]
+    id+=bot_id_suf2[random.randint(0,len(bot_id_suf2))]
+    id+=bot_id_dig2[random.randint(0,len(bot_id_dig2))]
+    return id
 #31. Random name for bship
 def ship_id_gen():
     id=random.choice(letters)
@@ -43,6 +61,10 @@ def ship_id_gen():
 def statistic():
     print
     print ("*"*18)+"!STATISTIC!"+("*"*18)
+    print
+    print "Field width is "+str(width)+"x"+str(width)+"."
+    print "There are "+str(ships_number)+" ships in the field!"
+    print "Player with "+str(winscore)+" scores wins the game!"
     print
     print "Name:"+(" "*18)+player_st[1]+"  "+player_st[2]
     print "Total Shots:           "+str(turn/2+1)+(" "*(17-len(str(turn/2+1))))+str(turn/2)+(" "*(15-len(str(turn/2))))
@@ -69,9 +91,14 @@ player_bot=[False,False,False]
 maxscore_owner=0
 #62. set players name 
 for i in range(2):
-    name=str(raw_input("Enter the name for Player "+str(i+1)+" (max 15 char, or \"bot\" for A.I. contol):"))
+    print "Enter the name for Player "+str(i+1)+"."
+    print "(max 15 char, or \"bot\" for A.I. control)"
+    name=str(raw_input(""))
     if string.lower(name)=="bot":
-        name="Player "+str(i+1)+" A.I."
+        name="BOT "+bot_id_gen()
+        player_bot[i+1]=True
+    if string.lower(name)=="ultrabot":
+        name="A.I. "+bot_id_gen2()
         player_bot[i+1]=True
     if len(name)==0:
         name="Player "+str(i+1)
@@ -119,7 +146,7 @@ if width==2:
     ships_number=1
 if width==3:
     ships_number=random.randint(1,3)
-"There are "+str(ships_number)+" ships in the field!"
+raw_input("There are "+str(ships_number)+" ships in the field!")
 ships_dead=ships_number
 #110. filling ships names list
 ships_id={0:"STEALTH"}
@@ -211,56 +238,72 @@ while winscore>maxscore:
     print ("*"*40)
     print
     raw_input("Turn "+str(turn)+" by "+str(player[currentplayer])+".")
-    print_board(board)
     while True:
+        print_board(board)
         if player_bot[currentplayer]==False:
             print "Select row and column. You can also type:"
             print "\"exit\" to end the game"
             print "\"stat\" to view statistic"
             print
+            stat=False
             guess_row=raw_input("Guess Row:")
-            guess_col=raw_input("Guess Col:")
+            if string.lower(str(guess_row))=="exit":
+                exit=True
+                break
+            if string.lower(str(guess_row))=="stat":
+                new_screen()
+                statistic()
+                stat=True
+            if len(str(guess_row))==0:
+                guess_row=random.randint(1,width)-1
+                raw_input("Randomly selected "+str(guess_row+1)+".")
+            else:
+                if guess_row=="0":
+                    guess_row=-1
+                else:
+                    guess_row=str_to_int(guess_row)-1
+            if stat==False:
+                print
+                guess_col=raw_input("Guess Col:")
+                if string.lower(str(guess_col))=="exit":
+                    exit=True
+                    break
+                if string.lower(str(guess_col))=="stat":
+                    new_screen()
+                    statistic()
+                if len(str(guess_col))==0:
+                    guess_col=random.randint(1,width)-1
+                    raw_input("Randomly selected "+str(guess_col+1)+".")
+                    print
+                else:
+                    if guess_col=="0":
+                        guess_coll=-1
+                    else:
+                        guess_col=str_to_int(guess_col)-1
         else:
             raw_input(player[currentplayer]+" is thinking....")
             guess_row=random.randint(1,width)-1
             guess_col=random.randint(1,width)-1
-            if random.randint(0,100)<=6:
+            if random.randint(0,100)<=bot_lag:
                 guess_row+=random.randint(-22,22)
                 raw_input(player[currentplayer]+" laging....")
-            if random.randint(0,100)<=6:
+            if random.randint(0,100)<=bot_lag:
                 guess_row+=random.randint(-22,22)
                 raw_input(player[currentplayer]+" laging....")
-            if random.randint(0,100)<=3:
-                while True:
-                    for i in range(ship_number):
-                        if ships_status[i]=="alive":
-                            bot_ship_pick=i
-                            break
-                    guess_row=int(ships_coor[i][0])-1
-                    guess_col=int(ships_coor[i][1])-1
-                    raw_input(player[currentplayer]+" uses Wi-Fi to hack the NASA satelite....")
-        if string.lower(str(guess_row))=="exit" or string.lower(str(guess_col))=="exit":
-            exit=True
-            break
-        if string.lower(str(guess_row))=="stat" or string.lower(str(guess_col))=="stat":
-            new_screen()
-            statistic()
-        else:
-            if len(str(guess_row))==0:
-                guess_row=random.randint(1,width)-1
-                print "Randomly selected "+str(guess_row+1)+"."
-            else:
-                guess_row=str_to_int(guess_row)-1
-            if len(str(guess_col))==0:
-                guess_col=random.randint(1,width)-1
-                print "Randomly selected "+str(guess_col+1)+"."
-            else:
-                guess_col=str_to_int(guess_col)-1            
+            if random.randint(0,100)<=bot_hack:
+                for i in range(ships_number):
+                    if ships_status[i]=="alive":
+                        bot_ship_pick=i
+                        break
+                guess_row=int(ships_xy[i][0])-1
+                guess_col=int(ships_xy[i][1])-1
+                raw_input(player[currentplayer]+" uses Wi-Fi to hack the NASA satelite....")            
+        if stat==False:
             break
     if exit==True:
         break
     new_screen()
-    print "Shot to "+str(guess_row+1)+"-"+str(guess_row+1)+"."
+    print "Shot to "+str(guess_row+1)+"-"+str(guess_col+1)+"."
     if (guess_row < 0 or guess_row > width-1) or (guess_col < 0 or guess_col > width-1):
         print_board(board)
         raw_input("Oops, that's not even in the ocean.")
@@ -277,7 +320,7 @@ while winscore>maxscore:
     elif coor_status[str(guess_row+1)+str(guess_col+1)][:5]=="alive":
         board[guess_row][guess_col] = "$"
         print_board(board)
-        print "You sunk the battleship "+ships_id[int(coor_status[str(guess_row+1)+str(guess_col+1)][5:])]+"!"
+        print player[currentplayer]+" sunk the battleship "+ships_id[int(coor_status[str(guess_row+1)+str(guess_col+1)][5:])]+"!"
         scores[currentplayer]+=1
         ships_status[int(coor_status[str(guess_row+1)+str(guess_col+1)][5:])]="dead"
         coor_status[str(guess_row+1)+str(guess_col+1)]="dead1"
@@ -300,7 +343,7 @@ while winscore>maxscore:
         shot_miss[currentplayer]+=1
     print
     for i in range(1,3):
-        print str(player[i])+": "+str(scores[i])+" scores"
+        print str(player_st[i])+": "+str(scores[i])+" scores"
     if currentplayer==1:
         currentplayer=2
     else:
@@ -323,4 +366,4 @@ if exit==False:
         statistic()
     new_screen()
 print "Made by Tatcoolx with the great help of Jirotakeo!"
-print "Thanks for playing! Goodbye!"
+print ("*"*10)+" Thanks for playing! Goodbye! "+("*"*1 )
