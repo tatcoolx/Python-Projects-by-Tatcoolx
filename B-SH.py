@@ -13,6 +13,8 @@ for i in range(65,91):
 for i in range(48,58):
     digits+=chr(i)
 name_error=True
+bot_lag=[0,0,0]
+bot_hack=[0,0,0]
 shot_out=[0,0,0]
 shot_miss=[0,0,0]
 shot_dead=[0,0,0]
@@ -36,19 +38,19 @@ def str_to_int(a):
 #31. bot name generators and lists
 bot_id_pre=["SUPER","SIMPLE","EXTRA","BONUS","EASY","ONE","LONELY","SWEET"]
 bot_id_suf=["CODE","STRING","VIRUS","BRAIN","SCRIPT","GAME"]
-bot_id_dig=["","007","0101011","333","777","666","999","2000","1488","3000","9999"]
+bot_id_dig=[""," 007"," 0101011"," 333"," 777"," 666"," 999"," 2000"," 1488"," 3000"," 9999"]
 def bot_id_gen():
-    id=bot_id_pre[random.randint(0,len(bot_id_pre))]
-    id+=bot_id_suf[random.randint(0,len(bot_id_suf))]
-    id+=bot_id_dig[random.randint(0,len(bot_id_dig))]
+    id=bot_id_pre[random.randint(0,len(bot_id_pre)-1)]
+    id+=bot_id_suf[random.randint(0,len(bot_id_suf)-1)]
+    id+=bot_id_dig[random.randint(0,len(bot_id_dig)-1)]
     return id
 bot_id_pre2=["SUPER","SIMPLE","EXTRA","BONUS","EASY","ONE","LONELY","SWEET","ULTRA","BRUTAL","GREEN"]
 bot_id_suf2=["CODE","STRING","VIRUS","BRAIN","SCRIPT","GAME","DOMINATOR","LORD","TERMINAL","WIN32.Trojan"]
-bot_id_dig2=["","","","","","007","0101011","333","777","666","999","2000","1488","3000","9999"]
+bot_id_dig2=["","","","",""," 007"," 0101011"," 333"," 777"," 666"," 999"," 2000"," 1488"," 3000"," 9999"," XXX"," QWERTY"," WASD"]
 def bot_id_gen2():
-    id=bot_id_pre2[random.randint(0,len(bot_id_pre2))]
-    id+=bot_id_suf2[random.randint(0,len(bot_id_suf2))]
-    id+=bot_id_dig2[random.randint(0,len(bot_id_dig2))]
+    id=bot_id_pre2[random.randint(0,len(bot_id_pre2)-1)]
+    id+=bot_id_suf2[random.randint(0,len(bot_id_suf2)-1)]
+    id+=bot_id_dig2[random.randint(0,len(bot_id_dig2)-1)]
     return id
 #31. Random name for bship
 def ship_id_gen():
@@ -92,14 +94,18 @@ maxscore_owner=0
 #62. set players name 
 for i in range(2):
     print "Enter the name for Player "+str(i+1)+"."
-    print "(max 15 char, or \"bot\" for A.I. control)"
+    print "(max 15 char, or type\"bot\" for A.I. control)"
     name=str(raw_input(""))
     if string.lower(name)=="bot":
-        name="BOT "+bot_id_gen()
+        name=bot_id_gen()
         player_bot[i+1]=True
+        bot_lag[i+1]=6
+        bot_hack[i+1]=3
     if string.lower(name)=="ultrabot":
-        name="A.I. "+bot_id_gen2()
+        name=bot_id_gen2()
         player_bot[i+1]=True
+        bot_lag[i+1]=3
+        bot_hack[i+1]=11
     if len(name)==0:
         name="Player "+str(i+1)
     elif len(name)>15:
@@ -284,13 +290,13 @@ while winscore>maxscore:
             raw_input(player[currentplayer]+" is thinking....")
             guess_row=random.randint(1,width)-1
             guess_col=random.randint(1,width)-1
-            if random.randint(0,100)<=bot_lag:
+            if random.randint(0,100)<=bot_lag[currentplayer]:
                 guess_row+=random.randint(-22,22)
                 raw_input(player[currentplayer]+" laging....")
-            if random.randint(0,100)<=bot_lag:
+            if random.randint(0,100)<=bot_lag[currentplayer]:
                 guess_row+=random.randint(-22,22)
                 raw_input(player[currentplayer]+" laging....")
-            if random.randint(0,100)<=bot_hack:
+            if random.randint(0,100)<=bot_hack[currentplayer]:
                 for i in range(ships_number):
                     if ships_status[i]=="alive":
                         bot_ship_pick=i
@@ -339,11 +345,11 @@ while winscore>maxscore:
         board[guess_row][guess_col] = "X"
         coor_status[str(guess_row+1)+str(guess_col+1)]="X1"
         print_board(board)
-        raw_input("You missed")
+        raw_input(player[currentplayer]+" missed.")
         shot_miss[currentplayer]+=1
     print
     for i in range(1,3):
-        print str(player_st[i])+": "+str(scores[i])+" scores"
+        print str(player_st[i])+": "+str(scores[i])+" scores."
     if currentplayer==1:
         currentplayer=2
     else:
