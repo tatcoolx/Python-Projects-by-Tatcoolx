@@ -301,6 +301,9 @@ while winscore>maxscore:
                     else:
                         guess_col=str_to_int(guess_col)-1
         else:
+            print "You can type:"
+            print "\"exit\" to end the game"
+            print "\"stat\" to view statistic"
             bot_guess=raw_input(player[currentplayer]+" is thinking....")
             if bot_guess=="stat":
                 new_screen()
