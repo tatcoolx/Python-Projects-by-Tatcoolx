@@ -68,13 +68,13 @@ def statistic():
     print "There are "+str(ships_number)+" ships in the field!"
     print "Player with "+str(winscore)+" scores wins the game!"
     print
-    print "Name:"+(" "*18)+player_st[1]+"  "+player_st[2]
-    print "Total Shots:           "+str(turn/2+1)+(" "*(17-len(str(turn/2+1))))+str(turn/2)+(" "*(15-len(str(turn/2))))
-    print "Missed Shots:          "+str(shot_miss[1])+(" "*(17-len(str(shot_miss[1]))))+str(shot_miss[2])+(" "*(15-len(str(shot_miss[2]))))
-    print "Outside of ocean:      "+str(shot_out[1])+(" "*(17-len(str(shot_out[1]))))+str(shot_out[2])+(" "*(15-len(str(shot_out[2]))))
-    print "Corpse shots:          "+str(shot_dead[1])+(" "*(17-len(str(shot_dead[1]))))+str(shot_dead[2])+(" "*(15-len(str(shot_dead[2]))))
-    print "Battleships destroyed: "+str(shot_kill[1])+(" "*(17-len(str(shot_kill[1]))))+str(shot_kill[2])+(" "*(15-len(str(shot_kill[2]))))
-    print "Scores:                "+str(scores[1])+(" "*(17-len(str(scores[1]))))+str(scores[2])+(" "*(15-len(str(scores[2]))))
+    print "Name:"+(" "*17)+(" | ")+player_st[1]+" | "+player_st[2]
+    print "Total Shots:           | "+str(turn/2+1)+(" "*(28-len(str(turn/2+1))))+("|")+str(turn/2)+(" "*(15-len(str(turn/2))))
+    print "Missed Shots:          | "+str(shot_miss[1])+(" "*(28-len(str(shot_miss[1]))))+("|")+str(shot_miss[2])+(" "*(28-len(str(shot_miss[2]))))
+    print "Outside of ocean:      | "+str(shot_out[1])+(" "*(28-len(str(shot_out[1]))))+("|")+str(shot_out[2])+(" "*(28-len(str(shot_out[2]))))
+    print "Corpse shots:          | "+str(shot_dead[1])+(" "*(28-len(str(shot_dead[1]))))+("|")+str(shot_dead[2])+(" "*(28-len(str(shot_dead[2]))))
+    print "Battleships destroyed: | "+str(shot_kill[1])+(" "*(28-len(str(shot_kill[1]))))+("|")+str(shot_kill[2])+(" "*(28-len(str(shot_kill[2]))))
+    print "Scores:                | "+str(scores[1])+(" "*(28-len(str(scores[1]))))+("|")+str(scores[2])+(" "*(28-len(str(scores[2]))))
     print
     raw_input("Press ENTERT to continue...")
     new_screen()
@@ -108,8 +108,8 @@ for i in range(2):
         bot_hack[i+1]=11
     if len(name)==0:
         name="Player "+str(i+1)
-    elif len(name)>15:
-        name=name[:15]
+    elif len(name)>26:
+        name=name[:26]
     player.append(name)
     player_st.append(name)
     new_screen()
