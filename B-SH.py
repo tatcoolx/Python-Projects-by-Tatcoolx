@@ -15,6 +15,8 @@ for i in range(48,58):
 name_error=True
 bot_lag=[0,0,0]
 bot_hack=[0,0,0]
+bot_lag_time=[0,"-","-"]
+bot_hack_time=[0,"-","-"]
 shot_out=[0,0,0]
 shot_miss=[0,0,0]
 shot_dead=[0,0,0]
@@ -67,14 +69,20 @@ def statistic():
     print "Field width is "+str(width)+"x"+str(width)+"."
     print "There are "+str(ships_number)+" ships in the field!"
     print "Player with "+str(winscore)+" scores wins the game!"
+    print player[maxscore_owner]+" is a Leader"
     print
-    print "Name:"+(" "*17)+(" | ")+player_st[1]+" | "+player_st[2]
-    print "Total Shots:           | "+str(turn/2+1)+(" "*(28-len(str(turn/2+1))))+("|")+str(turn/2)+(" "*(15-len(str(turn/2))))
-    print "Missed Shots:          | "+str(shot_miss[1])+(" "*(28-len(str(shot_miss[1]))))+("|")+str(shot_miss[2])+(" "*(28-len(str(shot_miss[2]))))
-    print "Outside of ocean:      | "+str(shot_out[1])+(" "*(28-len(str(shot_out[1]))))+("|")+str(shot_out[2])+(" "*(28-len(str(shot_out[2]))))
-    print "Corpse shots:          | "+str(shot_dead[1])+(" "*(28-len(str(shot_dead[1]))))+("|")+str(shot_dead[2])+(" "*(28-len(str(shot_dead[2]))))
-    print "Battleships destroyed: | "+str(shot_kill[1])+(" "*(28-len(str(shot_kill[1]))))+("|")+str(shot_kill[2])+(" "*(28-len(str(shot_kill[2]))))
-    print "Scores:                | "+str(scores[1])+(" "*(28-len(str(scores[1]))))+("|")+str(scores[2])+(" "*(28-len(str(scores[2]))))
+    print "Name:"+(" "*17)+(" ")+player_st[1]+" "+player_st[2]
+    print "Total scores:          "+str(scores[1])+(" "*(27-len(str(scores[1]))))+str(scores[2])+(" "*(26-len(str(scores[2]))))
+    print "Total shots:           "+str(turn/2+1)+(" "*(27-len(str(turn/2+1))))+str(turn/2)+(" "*(26-len(str(turn/2))))
+    print "-Missed shots:         "+str(shot_miss[1])+(" "*(27-len(str(shot_miss[1]))))+str(shot_miss[2])+(" "*(26-len(str(shot_miss[2]))))
+    print "-Outside of ocean:     "+str(shot_out[1])+(" "*(27-len(str(shot_out[1]))))+str(shot_out[2])+(" "*(26-len(str(shot_out[2]))))
+    print "-Corpse shots:         "+str(shot_dead[1])+(" "*(27-len(str(shot_dead[1]))))+str(shot_dead[2])+(" "*(26-len(str(shot_dead[2]))))
+    print "Battleships destroyed: "+str(shot_kill[1])+(" "*(27-len(str(shot_kill[1]))))+str(shot_kill[2])+(" "*(26-len(str(shot_kill[2]))))
+    print "Battleships to win:    "+str(winscore-scores[1])+(" "*(27-len(str(winscore-scores[1]))))+str(winscore-scores[2])+(" "*(26-len(str(winscore-scores[2]))))
+    if player_bot[1]==True or player_bot[2]==True:
+        print "Wi-Fi hacks:           "+str(bot_hack_time[1])+(" "*(27-len(str(bot_hack_time[1]))))+str(bot_hack_time[2])+(" "*(26-len(str(bot_hack_time[2]))))
+        print "Lag times:             "+str(bot_lag_time[1])+(" "*(27-len(str(bot_lag_time[1]))))+str(bot_lag_time[2])+(" "*(26-len(str(bot_lag_time[2]))))
+    print "Total turns:           "+str(turn)
     print
     raw_input("Press ENTERT to continue...")
     new_screen()
@@ -87,8 +95,8 @@ new_screen()
 raw_input("Let's play Battleship!")
 new_screen()
 #58. players lists, empty
-player=["REMBO"]
-player_st=["REMBO"]
+player=["No one"]
+player_st=["No one"]
 player_bot=[False,False,False]
 maxscore_owner=0
 #62. set players name 
@@ -101,11 +109,15 @@ for i in range(2):
         player_bot[i+1]=True
         bot_lag[i+1]=6
         bot_hack[i+1]=3
+        bot_lag_time[i+1]=0
+        bot_hack_time[i+1]=0
     if string.lower(name)=="ultrabot":
         name=bot_id_gen2()
         player_bot[i+1]=True
         bot_lag[i+1]=3
         bot_hack[i+1]=11
+        bot_lag_time[i+1]=0
+        bot_hack_time[i+1]=0
     if len(name)==0:
         name="Player "+str(i+1)
     elif len(name)>26:
@@ -116,7 +128,7 @@ for i in range(2):
     raw_input("Welcome "+name+"!!!")
     new_screen()
 for i in range(1,3):
-    for x in range (15-len(player_st[i])):
+    for x in range (26-len(player_st[i])):
         player_st[i]+=" "
 #77. field as list of lists, empty
 board = []
@@ -207,6 +219,7 @@ for i in ships_xy:
 #160. goal, maximum score and scores list, empty
 scores=[0,0,0]
 maxscore=0
+maxscore_owner=0
 winscore=int(ships_number/2+1)
 raw_input("Player with "+str(winscore)+" scores wins the game!")
 new_screen()
@@ -217,7 +230,7 @@ print
 raw_input("Press ENTER to start!")
 new_screen()
 #172. set turn
-turn=1
+turn=0
 #17\. place ships in the field
 for i in range(ships_number):
     print
@@ -239,6 +252,7 @@ def print_board(board):
     print
 #193.game
 while winscore>maxscore:
+    turn+=1
     if turn>1:
         new_screen()
     print ("*"*40)
@@ -287,15 +301,23 @@ while winscore>maxscore:
                     else:
                         guess_col=str_to_int(guess_col)-1
         else:
-            raw_input(player[currentplayer]+" is thinking....")
+            bot_guess=raw_input(player[currentplayer]+" is thinking....")
+            if bot_guess=="stat":
+                new_screen()
+                statistic()
+            elif bot_guess=="exit":
+                exit=True
+                break
             guess_row=random.randint(1,width)-1
             guess_col=random.randint(1,width)-1
             if random.randint(0,100)<=bot_lag[currentplayer]:
                 guess_row+=random.randint(-22,22)
                 raw_input(player[currentplayer]+" laging....")
+                bot_lag_time[currentplayer]+=1
             if random.randint(0,100)<=bot_lag[currentplayer]:
                 guess_row+=random.randint(-22,22)
                 raw_input(player[currentplayer]+" laging....")
+                bot_lag_time[currentplayer]+=1
             if random.randint(0,100)<=bot_hack[currentplayer]:
                 for i in range(ships_number):
                     if ships_status[i]=="alive":
@@ -303,7 +325,8 @@ while winscore>maxscore:
                         break
                 guess_row=int(ships_xy[i][0])-1
                 guess_col=int(ships_xy[i][1])-1
-                raw_input(player[currentplayer]+" uses Wi-Fi to hack the NASA satelite....")            
+                raw_input(player[currentplayer]+" uses Wi-Fi to hack the NASA satelite....")
+                bot_hack_time[currentplayer]+=1
         if stat==False:
             break
     if exit==True:
@@ -320,9 +343,9 @@ while winscore>maxscore:
         raw_input("Guessed that one already. Times shooted: "+coor_status[str(guess_row+1)+str(guess_col+1)][1:]+".")
         shot_miss[currentplayer]+=1
     elif coor_status[str(guess_row+1)+str(guess_col+1)][:4]=="dead":
-        coor_status[str(guess_row+1)+str(guess_col+1)]="X"+str(int(coor_status[str(guess_row+1)+str(guess_col+1)][4:])+1)
-        raw_input("Destroyed that one already. Times shooted: "+coor_status[str(guess_row+1)+str(guess_col+1)][4:]+".")
+        coor_status[str(guess_row+1)+str(guess_col+1)]="dead"+str(int(coor_status[str(guess_row+1)+str(guess_col+1)][4:])+1)
         shot_dead[currentplayer]+=1
+        raw_input("Destroyed that one already. Times shooted: "+coor_status[str(guess_row+1)+str(guess_col+1)][4:]+".")
     elif coor_status[str(guess_row+1)+str(guess_col+1)][:5]=="alive":
         board[guess_row][guess_col] = "$"
         print_board(board)
@@ -354,7 +377,6 @@ while winscore>maxscore:
         currentplayer=2
     else:
         currentplayer=1
-    turn+=1
     print 
     raw_input("Press ENTERT to continue...")
     print ("*"*40)
