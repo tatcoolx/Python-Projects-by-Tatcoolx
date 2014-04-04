@@ -229,10 +229,7 @@ raw_input("Press ENTER to start!")
 new_screen()
 #230. set turn
 turn=0
-#232. place ships in the field
-for i in range(ships_number):
-    print
-#235.Top and Bottom lines with digits
+#232.Top and Bottom lines with digits
 width_column_text_top="/ "
 width_column_text_bot="\ "
 for i in range(width):
@@ -240,7 +237,7 @@ for i in range(width):
     width_column_text_bot+=str(i+1)+" "
 width_column_text_top+="\ "
 width_column_text_bot+="/ "
-#243.f for field and field lines display with space symbol between elements
+#240.f for field and field lines display with space symbol between elements
 def print_board(board):
     print
     print width_column_text_top
@@ -248,7 +245,7 @@ def print_board(board):
         print str(i+1)+" "+" ".join(board[i])+" "+str(i+1)
     print width_column_text_bot
     print
-#251.game
+#248.game
 while winscore>maxscore:
     turn+=1
     if turn>1:
@@ -382,7 +379,7 @@ while winscore>maxscore:
     print 
     raw_input("Press ENTERT to continue...")
     print ("*"*40)
-#385. Exit or Victory + draw text
+#382. Exit or Victory + draw text
 new_screen()
 if exit==False:
     if draw==True:
