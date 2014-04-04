@@ -1,9 +1,7 @@
 #-*-coding: UTF-8-*-
 import random,string
 #03.set variables
-exit=False
-draw=False
-stat=False
+exit,draw,stat=False,False,False
 width_min=2
 width_max=9
 letters=""
@@ -21,7 +19,7 @@ shot_out=[0,0,0]
 shot_miss=[0,0,0]
 shot_dead=[0,0,0]
 shot_kill=[0,0,0]
-#019. takes all digits in str and stacks them.
+#022. takes all digits in str and stacks them.
 def str_to_int(a):
     if len(str(a))==0:
         print "error, in str_to_int, length=0"
@@ -37,7 +35,7 @@ def str_to_int(a):
             if len(str(str_to_int_output))==0:
                 str_to_int_output=0
             return int(str_to_int_output)
-#31. bot name generators and lists
+#38. bot name generators and lists
 bot_id_pre=["SUPER","SIMPLE","EXTRA","BONUS","EASY","ONE","LONELY","SWEET"]
 bot_id_suf=["CODE","STRING","VIRUS","BRAIN","SCRIPT","GAME"]
 bot_id_dig=[""," 007"," 0101011"," 333"," 777"," 666"," 999"," 2000"," 1488"," 3000"," 9999"]
@@ -54,14 +52,14 @@ def bot_id_gen2():
     id+=bot_id_suf2[random.randint(0,len(bot_id_suf2)-1)]
     id+=bot_id_dig2[random.randint(0,len(bot_id_dig2)-1)]
     return id
-#31. Random name for bship
+#55. Random name for bship
 def ship_id_gen():
     id=random.choice(letters)
     id+=random.choice(letters)
     id+="-"
     id+=random.choice(digits)
     return id
-#38. statistic
+#62. statistic
 def statistic():
     print
     print ("*"*18)+"!STATISTIC!"+("*"*18)
@@ -82,11 +80,11 @@ def statistic():
     if player_bot[1]==True or player_bot[2]==True:
         print "Wi-Fi hacks:           "+str(bot_hack_time[1])+(" "*(27-len(str(bot_hack_time[1]))))+str(bot_hack_time[2])+(" "*(26-len(str(bot_hack_time[2]))))
         print "Lag times:             "+str(bot_lag_time[1])+(" "*(27-len(str(bot_lag_time[1]))))+str(bot_lag_time[2])+(" "*(26-len(str(bot_lag_time[2]))))
-    print "Total turns:           "+str(turn)
+    print "Total turns:           "+str(turn+1)
     print
     raw_input("Press ENTERT to continue...")
     new_screen()
-#50. print a lot of empty strings
+#87. print a lot of empty strings
 def new_screen():
     for i in range(50):
         print
@@ -301,7 +299,7 @@ while winscore>maxscore:
                     else:
                         guess_col=str_to_int(guess_col)-1
         else:
-            print "You can type:"
+            print "Press ENTER. You can also type:"
             print "\"exit\" to end the game"
             print "\"stat\" to view statistic"
             bot_guess=raw_input(player[currentplayer]+" is thinking....")
@@ -346,6 +344,7 @@ while winscore>maxscore:
         raw_input("Guessed that one already. Times shooted: "+coor_status[str(guess_row+1)+str(guess_col+1)][1:]+".")
         shot_miss[currentplayer]+=1
     elif coor_status[str(guess_row+1)+str(guess_col+1)][:4]=="dead":
+        print_board(board)
         coor_status[str(guess_row+1)+str(guess_col+1)]="dead"+str(int(coor_status[str(guess_row+1)+str(guess_col+1)][4:])+1)
         shot_dead[currentplayer]+=1
         raw_input("Destroyed that one already. Times shooted: "+coor_status[str(guess_row+1)+str(guess_col+1)][4:]+".")
