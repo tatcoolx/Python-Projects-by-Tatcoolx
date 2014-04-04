@@ -1,2 +1,80 @@
 #-*-coding: UTF-8-*-
 import random,string
+# variables
+letters_h=""
+for i in range(65,91):
+    letters_h+=chr(i)
+letters_l=string.lower(letters_h)
+digits=""
+for i in range(48,58):
+    digits+=chr(i)
+# functions
+def str_to_int(a): # f takes all digits in string and stacks them.
+    if len(str(a))==0:
+        print "error, in str_to_int, length=0"
+    else:
+        if type(a)==int:
+            return a
+        if type(a)==str:
+            str_to_int_output=""
+            for i in range(len(str(a))):
+                for b in range(10):
+                    if a[i]==str(b):
+                        str_to_int_output+=a[i]
+            if len(str(str_to_int_output))==0:
+                str_to_int_output=0
+            return int(str_to_int_output)
+# name generators and lists
+name_adj=["","","WHITE","BLACK","RED","BLUE","YELLOW","SUPER","SIMPLE","EXTRA","BONUS","EASY","LONELY","SWEET","ULTRA","BRUTAL","GREEN"]
+name_noun=["CHEATER","VIRUS","BRAIN","ALIEN","GAMER","DOMINATOR","LORD","TERMINATOR","WINNER"]
+name_dig=["","",""," 007"," 0101011"," 333"," 777"," 666"," 999"," 2000"," 1488"," 3000"," 9999"," XXX"," QWERTY"," WASD"]
+def ship_id_gen(): # random name for bship
+    id=random.choice(letters)
+    id+=random.choice(letters)
+    id+="-"
+    id+=random.choice(digits)
+    return id
+def new_screen(): # print a lot of empty strings
+    for i in range(50):
+        print
+# welcoming
+new_screen()
+raw_input("Welcome to the fantasy world!!!")
+new_screen()
+# set name 
+print "Enter your name:"
+print "(max 24 characters)"
+name=str(raw_input(""))
+if len(name)==0:
+    name=name_adj+name_noun+name_dig
+elif len(name)>24:
+    name=name[:24]
+player=name
+player_st=name
+for x in range (24-len(player_st)):
+    player_st+=" "
+new_screen()
+# class select
+
+"""#77. field as list of lists, empty
+board = []
+#################
+ships_unnamed=ships_number
+name=ship_id_gen()
+while ships_unnamed!=0:
+    for i in range(ships_number):
+        for x in range(len(ships_id)):
+            while name_error==True:
+                name_error=False
+                if name==ships_id[i]:
+                    name=ship_id_gen()
+                    name_error=True
+                for y in range(len(ships_id)):
+                    if name==ships_id[y]:
+                        name=ship_id_gen()
+                        name_error=True
+            name_error=True
+        ships_id[i+1]=name
+        ships_unnamed-=1
+
+"""
