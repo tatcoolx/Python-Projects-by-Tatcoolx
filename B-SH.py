@@ -88,16 +88,16 @@ def statistic():
 def new_screen():
     for i in range(50):
         print
-#54. welcoming
+#91. welcoming
 new_screen()
 raw_input("Let's play Battleship!")
 new_screen()
-#58. players lists, empty
+#95. players lists, empty
 player=["No one"]
 player_st=["No one"]
 player_bot=[False,False,False]
 maxscore_owner=0
-#62. set players name 
+#100. set players name 
 for i in range(2):
     print "Enter the name for Player "+str(i+1)+"."
     print "(max 15 char, or type\"bot\" for A.I. control)"
@@ -128,9 +128,9 @@ for i in range(2):
 for i in range(1,3):
     for x in range (26-len(player_st[i])):
         player_st[i]+=" "
-#77. field as list of lists, empty
+#131. field as list of lists, empty
 board = []
-#79. set width for field and fill it 
+#133. set width for field and fill it 
 width=str(raw_input("Enter field width("+str(width_min)+"-"+str(width_max)+"):"))
 if width=="444" or width=="777":
     if width=="444":
@@ -156,7 +156,7 @@ new_screen()
 raw_input("Field width is "+str(width)+"x"+str(width)+".")
 for x in range(width):
     board.append(["#"] * width)
-#102. amount of ships
+#159. amount of ships
 ships_number=((width*width/3)+random.randint(1,6))
 if width==2:
     ships_number=1
@@ -164,7 +164,7 @@ if width==3:
     ships_number=random.randint(1,3)
 raw_input("There are "+str(ships_number)+" ships in the field!")
 ships_dead=ships_number
-#110. filling ships names list
+#167. filling ships names list
 ships_id={0:"STEALTH"}
 ships_unnamed=ships_number
 name=ship_id_gen()
@@ -183,7 +183,7 @@ while ships_unnamed!=0:
             name_error=True
         ships_id[i+1]=name
         ships_unnamed-=1
-#129. ships placement
+#186. ships placement
 ships_xy={0:"everywhere"}
 ships_unplaced=ships_number
 name=random.choice(digits[1:width+1])+random.choice(digits[1:width+1])
@@ -202,11 +202,11 @@ while ships_unplaced!=0:
             name_error=True
         ships_xy[i+1]=name
         ships_unplaced-=1
-#148. ships statuses list
+#205. ships statuses list
 ships_status={0:"INVICTIBLE"}
 for i in range(ships_number):
     ships_status[i+1]="alive"
-#152. coordinates status list
+#209. coordinates status list
 coor_status={}
 for i in range(width):
     for x in range(width):
@@ -214,7 +214,7 @@ for i in range(width):
 for i in ships_xy:
     if i>0:
         coor_status[ships_xy[i]]="alive"+str(i)
-#160. goal, maximum score and scores list, empty
+#217. goal, maximum score and scores list, empty
 scores=[0,0,0]
 maxscore=0
 maxscore_owner=0
@@ -227,12 +227,12 @@ print "Game starts with "+player[currentplayer]+"!"
 print
 raw_input("Press ENTER to start!")
 new_screen()
-#172. set turn
+#230. set turn
 turn=0
-#17\. place ships in the field
+#232. place ships in the field
 for i in range(ships_number):
     print
-#177.Top and Bottom lines with digits
+#235.Top and Bottom lines with digits
 width_column_text_top="/ "
 width_column_text_bot="\ "
 for i in range(width):
@@ -240,7 +240,7 @@ for i in range(width):
     width_column_text_bot+=str(i+1)+" "
 width_column_text_top+="\ "
 width_column_text_bot+="/ "
-#185.f for field and field lines display with space symbol between elements
+#243.f for field and field lines display with space symbol between elements
 def print_board(board):
     print
     print width_column_text_top
@@ -248,7 +248,7 @@ def print_board(board):
         print str(i+1)+" "+" ".join(board[i])+" "+str(i+1)
     print width_column_text_bot
     print
-#193.game
+#251.game
 while winscore>maxscore:
     turn+=1
     if turn>1:
@@ -382,7 +382,7 @@ while winscore>maxscore:
     print 
     raw_input("Press ENTERT to continue...")
     print ("*"*40)
-#272. Exit or Victory + draw text
+#385. Exit or Victory + draw text
 new_screen()
 if exit==False:
     if draw==True:
@@ -396,4 +396,4 @@ if exit==False:
         statistic()
     new_screen()
 print "Made by Tatcoolx with the great help of Jirotakeo!"
-print ("*"*10)+" Thanks for playing! Goodbye! "+("*"*1 )
+print ("*"*10)+" Thanks for playing! Goodbye! "+("*"*10)
