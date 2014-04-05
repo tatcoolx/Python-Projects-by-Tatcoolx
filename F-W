@@ -97,8 +97,7 @@ def class_change(): #table with 58 char width
     print "="+(" "*2)+"versus enemies"+(" "*2)+"="+(" "*5)+"technics"+(" "*5)+"="+(" "*1)+"disabling  enemy"+(" "*1)+"="
     print ("="*58)
 class_change()
-"""#77. field as list of lists, empty
-board = []
+"""
 #################
 ships_unnamed=ships_number
 name=ship_id_gen()
