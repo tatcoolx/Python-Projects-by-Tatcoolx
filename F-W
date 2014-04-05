@@ -24,10 +24,22 @@ def str_to_int(a): # f takes all digits in string and stacks them.
             if len(str(str_to_int_output))==0:
                 str_to_int_output=0
             return int(str_to_int_output)
-# name generators and lists
+#lists
 name_adj=["","","WHITE","BLACK","RED","BLUE","YELLOW","SUPER","SIMPLE","EXTRA","BONUS","EASY","LONELY","SWEET","ULTRA","BRUTAL","GREEN"]
 name_noun=["CHEATER","VIRUS","BRAIN","ALIEN","GAMER","DOMINATOR","LORD","TERMINATOR","WINNER"]
 name_dig=["","",""," 007"," 0101011"," 333"," 777"," 666"," 999"," 2000"," 1488"," 3000"," 9999"," XXX"," QWERTY"," WASD"]
+stat_base_str={"KNI":24,"ARC":16,"WIZ":10,}
+stat_base_dex={"KNI":15,"ARC":20,"WIZ":14,}
+stat_base_int={"KNI":10,"ARC":15,"WIZ":26,}
+stat_base_phy={"KNI":5,"ARC":0,"WIZ":0,}
+stat_base_mag={"KNI":0,"ARC":0,"WIZ":5,}
+stat_base_def={"KNI":10,"ARC":0,"WIZ":0,}
+stat_base_hit={"KNI":10,"ARC":25,"WIZ":0,}
+stat_base_crc={"KNI":2,"ARC":6,"WIZ":0,}
+stat_base_crd={"KNI":200,"ARC":180,"WIZ":300,}
+stat_base_eva={"KNI":0,"ARC":10,"WIZ":5,}
+stat_base_blc={"KNI":10 ,"ARC":0,"WIZ":0,}
+#id generator
 def ship_id_gen(): # random name for bship
     id=random.choice(letters)
     id+=random.choice(letters)
@@ -55,7 +67,36 @@ for x in range (24-len(player_st)):
     player_st+=" "
 new_screen()
 # class select
-
+def class_change(): #table with 58 char width
+    print "STRENGTH(STR)  - affects maximum hit points(MHP),"
+    print "               physical damage(PHY), hit rate(HIT),"
+    print "               critical damage(CRD), block chance(BLC)"
+    print "DEXTERITY(DEX) - affects hit rate(HIT), critical"
+    print "               chance(CRC), evasion(EVA)"
+    print "INTELLECT(INT) - affects maximum mana points(MHP),"
+    print "               magical damage(MAG), hit rate(HIT)"
+    print
+    print ("="*23)+"SELECT CLASS"+("="*23)
+    print "="+(" "*6)+"KNIGHT"+(" "*6)+"="+(" "*6)+"ARCHER"+(" "*6)+"="+(" "*6)+"WIZARD"+(" "*6)+"="
+    print ("="*19)+"CLASS===BASE===STATS"+("="*19)
+    print "="+(" "*6)+"STR:"+str(stat_base_str["KNI"])+(" "*6)+"="+(" "*6)+"STR:"+str(stat_base_str["ARC"])+(" "*6)+"="+(" "*6)+"STR:"+str(stat_base_str["WIZ"])+(" "*6)+"="
+    print "="+(" "*6)+"DEX:"+str(stat_base_dex["KNI"])+(" "*6)+"="+(" "*6)+"DEX:"+str(stat_base_dex["ARC"])+(" "*6)+"="+(" "*6)+"DEX:"+str(stat_base_dex["WIZ"])+(" "*6)+"="
+    print "="+(" "*6)+"INT:"+str(stat_base_int["KNI"])+(" "*6)+"="+(" "*6)+"INT:"+str(stat_base_int["ARC"])+(" "*6)+"="+(" "*6)+"INT:"+str(stat_base_int["WIZ"])+(" "*6)+"="
+    print ("="*18)+"CLASS===BASE===BONUSES"+("="*18)
+    print "="+(" "*6)+"PHY:"+str(stat_base_phy["KNI"])+(" "*7)+"="+(" "*6)+"PHY:"+str(stat_base_phy["ARC"])+(" "*7)+"="+(" "*6)+"PHY:"+str(stat_base_phy["WIZ"])+(" "*7)+"="
+    print "="+(" "*6)+"MAG:"+str(stat_base_mag["KNI"])+(" "*7)+"="+(" "*6)+"MAG:"+str(stat_base_mag["ARC"])+(" "*7)+"="+(" "*6)+"MAG:"+str(stat_base_mag["WIZ"])+(" "*7)+"="
+    print "="+(" "*6)+"DEF:"+str(stat_base_def["KNI"])+(" "*6)+"="+(" "*6)+"DEF:"+str(stat_base_def["ARC"])+(" "*7)+"="+(" "*6)+"DEF:"+str(stat_base_def["WIZ"])+(" "*7)+"="
+    print "="+(" "*6)+"HIT:"+str(stat_base_hit["KNI"])+(" "*6)+"="+(" "*6)+"HIT:"+str(stat_base_hit["ARC"])+(" "*6)+"="+(" "*6)+"HIT:"+str(stat_base_hit["WIZ"])+(" "*7)+"="
+    print "="+(" "*6)+"CRC:"+str(stat_base_crc["KNI"])+(" "*7)+"="+(" "*6)+"CRC:"+str(stat_base_crc["ARC"])+(" "*7)+"="+(" "*6)+"CRC:"+str(stat_base_crc["WIZ"])+(" "*7)+"="
+    print "="+(" "*6)+"CRD:"+str(stat_base_crd["KNI"])+(" "*5)+"="+(" "*6)+"CRD:"+str(stat_base_crd["ARC"])+(" "*5)+"="+(" "*6)+"CRD:"+str(stat_base_crd["WIZ"])+(" "*5)+"="
+    print "="+(" "*6)+"EVA:"+str(stat_base_eva["KNI"])+(" "*7)+"="+(" "*6)+"EVA:"+str(stat_base_eva["ARC"])+(" "*6)+"="+(" "*6)+"EVA:"+str(stat_base_eva["WIZ"])+(" "*7)+"="
+    print "="+(" "*6)+"BLC:"+str(stat_base_blc["KNI"])+(" "*6)+"="+(" "*6)+"BLC:"+str(stat_base_blc["ARC"])+(" "*7)+"="+(" "*6)+"BLC:"+str(stat_base_blc["WIZ"])+(" "*7)+"="
+    print ("="*23)+"DESCRITPTION"+("="*23)
+    print "="+(" "*2)+"Best class for"+(" "*2)+"="+(" "*2)+"Best class for"+(" "*2)+"="+(" "*2)+"Best class for"+(" "*2)+"="
+    print "="+(" "*1)+"great ressitance"+(" "*1)+"="+(" "*3)+"hit and evade"+(" "*2)+"="+(" "*1)+"fast killing and"+(" "*1)+"="
+    print "="+(" "*2)+"versus enemies"+(" "*2)+"="+(" "*5)+"technics"+(" "*5)+"="+(" "*1)+"disabling  enemy"+(" "*1)+"="
+    print ("="*58)
+class_change()
 """#77. field as list of lists, empty
 board = []
 #################
