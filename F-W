@@ -2,7 +2,11 @@ protect=1+"asd"
 prostat a-sdf kms"""
 #-*-coding: UTF-8-*-
 import random,string
-# variables
+#variables integer
+count=0
+#variables boolean
+random_bonus=False
+#variable string
 letters_h=""
 for i in range(65,91):
     letters_h+=chr(i)
@@ -10,7 +14,7 @@ letters_l=string.lower(letters_h)
 digits=""
 for i in range(48,58):
     digits+=chr(i)
-# functions
+#functions
 def str_to_int(a): # f takes all digits in string and stacks them.
     if len(str(a))==0:
         print "error, in str_to_int, length=0"
@@ -30,17 +34,28 @@ def str_to_int(a): # f takes all digits in string and stacks them.
 name_adj=["","","WHITE","BLACK","RED","BLUE","YELLOW","SUPER","SIMPLE","EXTRA","BONUS","EASY","LONELY","SWEET","ULTRA","BRUTAL","GREEN"]
 name_noun=["CHEATER","VIRUS","BRAIN","ALIEN","GAMER","DOMINATOR","LORD","TERMINATOR","WINNER"]
 name_dig=["","",""," 007"," 0101011"," 333"," 777"," 666"," 999"," 2000"," 1488"," 3000"," 9999"," XXX"," QWERTY"," WASD"]
-stat_base_str={"KNI":24,"ARC":16,"WIZ":10,}
-stat_base_dex={"KNI":15,"ARC":20,"WIZ":14,}
-stat_base_int={"KNI":10,"ARC":15,"WIZ":26,}
-stat_base_phy={"KNI":5,"ARC":0,"WIZ":0,}
-stat_base_mag={"KNI":0,"ARC":0,"WIZ":5,}
-stat_base_def={"KNI":10,"ARC":0,"WIZ":0,}
-stat_base_hit={"KNI":10,"ARC":25,"WIZ":0,}
-stat_base_crc={"KNI":2,"ARC":6,"WIZ":0,}
-stat_base_crd={"KNI":200,"ARC":180,"WIZ":300,}
-stat_base_eva={"KNI":0,"ARC":10,"WIZ":5,}
-stat_base_blc={"KNI":10 ,"ARC":0,"WIZ":0,}
+#races
+race=["HUM","ELF","ORC","UND"]
+race_name={"HUM":"HUMAN","ELF":"ELF","ORC":"ORC","UND":"UNDEAD"}
+stat_race_mhp={"HUM":0,"ELF":0,"ORC":50,"UND":0}
+stat_race_mmp={"HUM":0,"ELF":20,"ORC":0,"UND":30}
+stat_race_str={"HUM":5,"ELF":0,"ORC":7,"UND":3}
+stat_race_dex={"HUM":5,"ELF":7,"ORC":3,"UND":0}
+stat_race_int={"HUM":5,"ELF":3,"ORC":0,"UND":7}
+#classes
+classes=["KNI","ARC","WIZ"]
+classes_name={"KNI":"KNIGHT","ARC":"ARCHER","WIZ":"WIZARD"}
+stat_base_str={"KNI":24,"ARC":16,"WIZ":10}
+stat_base_dex={"KNI":15,"ARC":20,"WIZ":14}
+stat_base_int={"KNI":10,"ARC":15,"WIZ":26}
+stat_base_phy={"KNI":5,"ARC":0,"WIZ":0}
+stat_base_mag={"KNI":0,"ARC":0,"WIZ":5}
+stat_base_def={"KNI":10,"ARC":0,"WIZ":0}
+stat_base_hit={"KNI":10,"ARC":25,"WIZ":0}
+stat_base_crc={"KNI":2,"ARC":6,"WIZ":0}
+stat_base_crd={"KNI":200,"ARC":180,"WIZ":300}
+stat_base_eva={"KNI":0,"ARC":10,"WIZ":5}
+stat_base_blc={"KNI":10 ,"ARC":0,"WIZ":0}
 #id generator
 def ship_id_gen(): # random name for bship
     id=random.choice(letters)
@@ -48,7 +63,8 @@ def ship_id_gen(): # random name for bship
     id+="-"
     id+=random.choice(digits)
     return id
-def new_screen(): # print a lot of empty strings
+# print a lot of empty strings
+def new_screen():
     for i in range(50):
         print
 # welcoming
@@ -60,7 +76,7 @@ print "Enter your name:"
 print "(max 24 characters)"
 name=str(raw_input(""))
 if len(name)==0:
-    name=name_adj+name_noun+name_dig
+    name=random.choice(name_adj)+random.choice(name_noun)+random.choice(name_dig)
 elif len(name)>24:
     name=name[:24]
 player=name
@@ -68,15 +84,79 @@ player_st=name
 for x in range (24-len(player_st)):
     player_st+=" "
 new_screen()
+raw_input("Hello "+player+".")
+new_screen()
+# race select, width 57
+print "STRENGTH(STR)  - gives +25.0 maximum hit points(MHP),"
+print "               +3.0 physical damage(PHY), +0.4 hit rate(HIT),"
+print "               +1.0 critical damage(CRD), +0.2block chance(BLC)"
+print "DEXTERITY(DEX) - gives +1.1 hit rate(HIT), +0.7 critical"
+print "               chance(CRC), +0.6 evasion(EVA)"
+print "INTELLECT(INT) - gives +13.0 maximum mana points(MHP),"
+print "               +4.0 magical damage(MAG), +0.3 hit rate(HIT)"
+print
+print ("="*22)+"SELECT===RACE"+("="*22)
+print "="+(" "*4)+"HUMAN"+(" "*4)+"="+(" "*5)+"ELF"+(" "*5)+"="+(" "*5)+"ORC"+(" "*5)+"="+(" "*3)+"UNDEAD"+(" "*4)+"="
+print ("="*18)+"RACE===BONUS===STATS"+("="*19)
+print "="+(" "*4)+"STR:"+str(stat_race_str["HUM"])+(" "*4)+"="+(" "*4)+"STR:"+str(stat_race_str["ELF"])+(" "*4)+"="+(" "*4)+"STR:"+str(stat_race_str["ORC"])+(" "*4)+"="+(" "*4)+"STR:"+str(stat_race_str["UND"])+(" "*4)+"="
+print "="+(" "*4)+"DEX:"+str(stat_race_dex["HUM"])+(" "*4)+"="+(" "*4)+"DEX:"+str(stat_race_dex["ELF"])+(" "*4)+"="+(" "*4)+"DEX:"+str(stat_race_dex["ORC"])+(" "*4)+"="+(" "*4)+"DEX:"+str(stat_race_dex["UND"])+(" "*4)+"="
+print "="+(" "*4)+"INT:"+str(stat_race_int["HUM"])+(" "*4)+"="+(" "*4)+"INT:"+str(stat_race_int["ELF"])+(" "*4)+"="+(" "*4)+"INT:"+str(stat_race_int["ORC"])+(" "*4)+"="+(" "*4)+"INT:"+str(stat_race_int["UND"])+(" "*4)+"="
+print ("="*18)+"RACE===BASE===BONUSES"+("="*18)
+print "="+(" "*4)+"MHP:"+str(stat_race_mhp["HUM"])+(" "*4)+"="+(" "*4)+"MHP:"+str(stat_race_mhp["ELF"])+(" "*4)+"="+(" "*4)+"MHP:"+str(stat_race_mhp["ORC"])+(" "*3)+"="+(" "*4)+"MHP:"+str(stat_race_mhp["UND"])+(" "*4)+"="
+print "="+(" "*4)+"MMP:"+str(stat_race_mmp["HUM"])+(" "*4)+"="+(" "*4)+"MMP:"+str(stat_race_mmp["ELF"])+(" "*3)+"="+(" "*4)+"MMP:"+str(stat_race_mmp["ORC"])+(" "*4)+"="+(" "*4)+"MMP:"+str(stat_race_mmp["UND"])+(" "*3)+"="
+print ("="*23)+"DESCRIPTION"+("="*23)
+print "="+(" "*1)+"Balance in"+(" "*2)+"="+(" "*1)+"Agility and"+(" "*1)+"="+(" "*2)+"Strong and"+(" "*1)+"="+(" "*2)+"Mysterious"+(" "*1)+"="
+print "="+(" "*2)+"all stats"+(" "*2)+"="+(" "*2)+"precision"+(" "*2)+"="+(" "*2)+"endurable"+(" "*2)+"="+(" "*1)+"and tainted"+(" "*1)+"="
+print "="+(" "*3)+"for all"+(" "*3)+"="+(" "*2)+"race, best"+(" "*1)+"="+(" "*2)+"race, best"+(" "*1)+"="+(" "*2)+"race, best"+(" "*1)+"="
+print "="+(" "*3)+"classes"+(" "*3)+"="+(" "*1)+"for archery"+(" "*1)+"="+(" "*2)+"for knight"+(" "*1)+"="+(" "*1)+"for wizardy"+(" "*1)+"="
+print ("="*57)
+print "="+(" "*2)+"Cannot be changed further. Press \"ENTER\" for random"+(" "*2)+"="
+print ("="*57)
+print
+print "Enter at least 1 first character of desired race (h/e/o/u):"
+choice=raw_input()
+if len(choice)==0:
+        player_race=random.choice(race)
+        random_bonus=True
+        print "Randomly selected "+race_name[player_race]+". Random bonus:"
+        print "You will gain 5 attribute bonus when random class is selected."
+else:
+    for i in range(len(choice)):
+        if string.lower(choice[i])=="h":
+            player_race="HUM"
+            print "You selected "+race_name[player_race]+"."
+            break
+        elif string.lower(choice[i])=="e":
+            player_race="ELF"
+            print "You selected "+race_name[player_race]+"."
+            break
+        elif string.lower(choice[i])=="o":
+            player_race="ORC"
+            print "You selected "+race_name[player_race]+"."
+            break
+        elif string.lower(choice[i])=="u":
+            player_race="UND"
+            print "You selected "+race_name[player_race]+"."
+            break
+        else:
+            count+=1
+            if count==len(choice):
+                player_race=random.choice(race)
+                random_bonus=True
+                print "Randomly selected "+race_name[player_race]+". Random bonus:"
+                print "You will gain 5 attribute bonus when random class is selected."
+new_screen()
+raw_input()
+new_screen()
 # class select
 def class_change(): #table with 58 char width
-    print "STRENGTH(STR)  - affects maximum hit points(MHP),"
-    print "               physical damage(PHY), hit rate(HIT),"
-    print "               critical damage(CRD), block chance(BLC)"
-    print "DEXTERITY(DEX) - affects hit rate(HIT), critical"
-    print "               chance(CRC), evasion(EVA)"
-    print "INTELLECT(INT) - affects maximum mana points(MHP),"
-    print "               magical damage(MAG), hit rate(HIT)"
+    print "STRENGTH(STR)  - gives +25.0 maximum hit points(MHP),"
+    print "               +3.0 physical damage(PHY), +0.4 hit rate(HIT),"
+    print "               +1.0 critical damage(CRD), +0.2block chance(BLC)"
+    print "DEXTERITY(DEX) - gives +1.1 hit rate(HIT), +0.7 critical"
+    print "               chance(CRC), +0.6 evasion(EVA)"
+    print "INTELLECT(INT) - gives +13.0 maximum mana points(MHP),"
+    print "               +4.0 magical damage(MAG), +0.3 hit rate(HIT)"
     print
     print ("="*23)+"SELECT CLASS"+("="*23)
     print "="+(" "*6)+"KNIGHT"+(" "*6)+"="+(" "*6)+"ARCHER"+(" "*6)+"="+(" "*6)+"WIZARD"+(" "*6)+"="
@@ -93,11 +173,51 @@ def class_change(): #table with 58 char width
     print "="+(" "*6)+"CRD:"+str(stat_base_crd["KNI"])+(" "*5)+"="+(" "*6)+"CRD:"+str(stat_base_crd["ARC"])+(" "*5)+"="+(" "*6)+"CRD:"+str(stat_base_crd["WIZ"])+(" "*5)+"="
     print "="+(" "*6)+"EVA:"+str(stat_base_eva["KNI"])+(" "*7)+"="+(" "*6)+"EVA:"+str(stat_base_eva["ARC"])+(" "*6)+"="+(" "*6)+"EVA:"+str(stat_base_eva["WIZ"])+(" "*7)+"="
     print "="+(" "*6)+"BLC:"+str(stat_base_blc["KNI"])+(" "*6)+"="+(" "*6)+"BLC:"+str(stat_base_blc["ARC"])+(" "*7)+"="+(" "*6)+"BLC:"+str(stat_base_blc["WIZ"])+(" "*7)+"="
-    print ("="*23)+"DESCRITPTION"+("="*23)
+    print ("="*23)+"DESCRIPTION"+("="*24)
     print "="+(" "*2)+"Best class for"+(" "*2)+"="+(" "*2)+"Best class for"+(" "*2)+"="+(" "*2)+"Best class for"+(" "*2)+"="
     print "="+(" "*1)+"great ressitance"+(" "*1)+"="+(" "*3)+"hit and evade"+(" "*2)+"="+(" "*1)+"fast killing and"+(" "*1)+"="
     print "="+(" "*2)+"versus enemies"+(" "*2)+"="+(" "*5)+"technics"+(" "*5)+"="+(" "*1)+"disabling  enemy"+(" "*1)+"="
     print ("="*58)
+    print "="+(" "*12)+"Can be changed in the \"CAMP MENU\""+(" "*11)+"="
+    print ("="*58)
+    if random_bonus==True:
+        print "You will gain 5 attribute bonus when random class is selected"
+        print "Enter at least 1 first character of desired class (k/a/w):"
+    choice=raw_input()
+    count=0
+    if len(choice)==0:
+        player_class=random.choice(classes)
+        if random_bonus==True:
+            random_bonus=False
+            print "Randomly selected "+classes_name[player_class]+". Random bonus:"
+            print "You gain 5 attribute bonus."
+        else:
+            print "Randomly selected "+classes_name[player_class]+"."
+    else:
+        for i in range(len(choice)):
+            if string.lower(choice[i])=="k":
+                player_class="KNI"
+                print "You selected "+class_name[player_class]+"."
+                break
+            elif string.lower(choice[i])=="a":
+                player_class="ARC"
+                print "You selected "+class_name[player_class]+"."
+                break
+            elif string.lower(choice[i])=="w":
+                player_class="WIZ"
+                print "You selected "+class_name[player_class]+"."
+                break
+            else:
+                count+=1
+                if count==len(choice):
+                    player_class=random.choice(classes)
+                    if random_bonus==True:
+                        random_bonus=False
+                        print "Randomly selected "+classes_name[player_class]+". Random bonus:"
+                        print "You gain 5 attribute bonus."
+                    else:
+                        print "Randomly selected "+classes_name[player_class]+"."
+    raw_input()
 class_change()
 """
 #################
