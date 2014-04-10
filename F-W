@@ -7,6 +7,8 @@ count=0
 #variables boolean
 random_bonus=False
 #variable string
+player_class="none"
+player_race=""
 letters_h=""
 for i in range(65,91):
     letters_h+=chr(i)
@@ -113,37 +115,44 @@ print ("="*57)
 print "="+(" "*2)+"Cannot be changed further. Press \"ENTER\" for random"+(" "*2)+"="
 print ("="*57)
 print
-print "Enter at least 1 first character of desired race (h/e/o/u):"
-choice=raw_input()
+print "Enter at least 1 first letter of desired race (\"h\"/\"e\"/\"o\"/\"u\"):"
+print "(type \"random\", \"r\" or leave empty to pick random race)"
+choice=raw_input(player+":")
 if len(choice)==0:
         player_race=random.choice(race)
         random_bonus=True
-        print "Randomly selected "+race_name[player_race]+". Random bonus:"
+        print "Randomly selected >> "+race_name[player_race]+" <<"
         print "You will gain 5 attribute bonus when random class is selected."
 else:
     for i in range(len(choice)):
         if string.lower(choice[i])=="h":
             player_race="HUM"
-            print "You selected "+race_name[player_race]+"."
+            print "You selected >> "+race_name[player_race]+" <<"
             break
         elif string.lower(choice[i])=="e":
             player_race="ELF"
-            print "You selected "+race_name[player_race]+"."
+            print "You selected >> "+race_name[player_race]+" <<"
             break
         elif string.lower(choice[i])=="o":
             player_race="ORC"
-            print "You selected "+race_name[player_race]+"."
+            print "You selected >> "+race_name[player_race]+" <<"
             break
         elif string.lower(choice[i])=="u":
             player_race="UND"
-            print "You selected "+race_name[player_race]+"."
+            print "You selected >> "+race_name[player_race]+" <<"
+            break
+        elif string.lower(choice[i])=="r":
+            player_race=random.choice(race)
+            random_bonus=True
+            print "Randomly selected >> "+race_name[player_race]+" <<"
+            print "You will gain 5 attribute bonus when random class is selected."
             break
         else:
             count+=1
             if count==len(choice):
                 player_race=random.choice(race)
                 random_bonus=True
-                print "Randomly selected "+race_name[player_race]+". Random bonus:"
+                print "Randomly selected >> "+race_name[player_race]+" <<"
                 print "You will gain 5 attribute bonus when random class is selected."
 raw_input()
 new_screen()
@@ -179,16 +188,18 @@ def class_change(random_race=random_bonus): #table with 58 char width
     print ("="*58)
     print "="+(" "*12)+"Can be changed in the \"CAMP MENU\""+(" "*11)+"="
     print ("="*58)
+    print
+    print "Enter at least 1 first character of desired class (\"k\"/\"a\"/\"w\"):"
+    print "(type \"random\", \"r\" or leave empty to pick random class)"
     if random_race==True:
         print "You will gain 5 attribute bonus when random class is selected"
-        print "Enter at least 1 first character of desired class (k/a/w):"
-    choice=raw_input()
+    choice=raw_input(player+":")
     count=0
     if len(choice)==0:
         player_class=random.choice(classes)
         if random_race==True:
             random_race=False
-            print "Randomly selected "+classes_name[player_class]+"."
+            print "Randomly selected >> "+classes_name[player_class]+" <<"
             print "You gain 5 attribute bonus."
         else:
             print "Randomly selected "+classes_name[player_class]+"."
@@ -196,15 +207,27 @@ def class_change(random_race=random_bonus): #table with 58 char width
         for i in range(len(choice)):
             if string.lower(choice[i])=="k":
                 player_class="KNI"
-                print "You selected "+classes_name[player_class]+"."
+                print "You selected >> "+classes_name[player_class]+" <<"
                 break
             elif string.lower(choice[i])=="a":
                 player_class="ARC"
-                print "You selected "+classes_name[player_class]+"."
+                print "You selected >> "+classes_name[player_class]+" <<"
                 break
             elif string.lower(choice[i])=="w":
                 player_class="WIZ"
-                print "You selected "+classes_name[player_class]+"."
+                print "You selected >> "+classes_name[player_class]+" <<"
+                break
+            elif string.lower(choice[i])=="n" and player_class!="none":
+                print "You canceled class change."
+                break
+            elif string.lower(choice[i])=="r":
+                player_class=random.choice(classes)
+                if random_race==True:
+                    random_race=False
+                    print "Randomly selected >> "+classes_name[player_class]+" <<"
+                    print "You gain 5 attribute bonus."
+                else:
+                    print "Randomly selected >> "+classes_name[player_class]+" <<"
                 break
             else:
                 count+=1
@@ -212,10 +235,10 @@ def class_change(random_race=random_bonus): #table with 58 char width
                     player_class=random.choice(classes)
                     if random_race==True:
                         random_race=False
-                        print "Randomly selected "+classes_name[player_class]+"."
+                        print "Randomly selected >> "+classes_name[player_class]+" <<"
                         print "You gain 5 attribute bonus."
                     else:
-                        print "Randomly selected "+classes_name[player_class]+"."
+                        print "Randomly selected >> "+classes_name[player_class]+" <<"
     raw_input()
 class_change()
 """
