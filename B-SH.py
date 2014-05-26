@@ -22,7 +22,8 @@ shot_kill=[0,0,0]
 #022. takes all digits in str and stacks them.
 def str_to_int(a):
     if len(str(a))==0:
-        print "error, in str_to_int, length=0"
+        print "error, in str_to_int, length=0, 0 returned"
+        return int(str_to_int_output)
     else:
         if type(a)==int:
             return a
@@ -64,9 +65,9 @@ def statistic():
     print
     print ("*"*18)+"!STATISTIC!"+("*"*18)
     print
-    print "Field width is "+str(width)+"x"+str(width)+"."
-    print "There are "+str(ships_number)+" ships in the field!"
-    print "Player with "+str(winscore)+" scores wins the game!"
+    print "Field width is   "+str(width)+"x"+str(width)+"  ."
+    print "There are   "+str(ships_number)+"   ships in the field!"
+    print "Player with   "+str(winscore)+"   scores wins the game!"
     print player[maxscore_owner]+" is a Leader"
     print
     print "Name:"+(" "*17)+(" ")+player_st[1]+" "+player_st[2]
@@ -80,7 +81,7 @@ def statistic():
     if player_bot[1]==True or player_bot[2]==True:
         print "Wi-Fi hacks:           "+str(bot_hack_time[1])+(" "*(27-len(str(bot_hack_time[1]))))+str(bot_hack_time[2])+(" "*(26-len(str(bot_hack_time[2]))))
         print "Lag times:             "+str(bot_lag_time[1])+(" "*(27-len(str(bot_lag_time[1]))))+str(bot_lag_time[2])+(" "*(26-len(str(bot_lag_time[2]))))
-    print "Total turns:           "+str(turn+1)
+    print "Total turns:           "+str(turn)
     print
     raw_input("Press ENTERT to continue...")
     new_screen()
@@ -90,7 +91,7 @@ def new_screen():
         print
 #91. welcoming
 new_screen()
-raw_input("Let's play Battleship!")
+raw_input("Wellcome to the Battleships !!!")
 new_screen()
 #95. players lists, empty
 player=["No one"]
@@ -100,7 +101,7 @@ maxscore_owner=0
 #100. set players name 
 for i in range(2):
     print "Enter the name for Player "+str(i+1)+"."
-    print "(max 15 char, or type\"bot\" for A.I. control)"
+    print "(max 15 char, or type  \"bot\"  or  \"ultrabot\"  for A.I. control)"
     name=str(raw_input(""))
     if string.lower(name)=="bot":
         name=bot_id_gen()
@@ -113,7 +114,7 @@ for i in range(2):
         name=bot_id_gen2()
         player_bot[i+1]=True
         bot_lag[i+1]=3
-        bot_hack[i+1]=11
+        bot_hack[i+1]=12
         bot_lag_time[i+1]=0
         bot_hack_time[i+1]=0
     if len(name)==0:
@@ -153,7 +154,7 @@ else:
         width=width_min
         raw_input("Width reseted to "+str(width))
 new_screen()
-raw_input("Field width is "+str(width)+"x"+str(width)+".")
+raw_input("Field width is   "+str(width)+" x "+str(width)+" .")
 for x in range(width):
     board.append(["#"] * width)
 #159. amount of ships
@@ -162,7 +163,7 @@ if width==2:
     ships_number=1
 if width==3:
     ships_number=random.randint(1,3)
-raw_input("There are "+str(ships_number)+" ships in the field!")
+raw_input("There are   "+str(ships_number)+"   ships in the field!")
 ships_dead=ships_number
 #167. filling ships names list
 ships_id={0:"STEALTH"}
@@ -219,11 +220,11 @@ scores=[0,0,0]
 maxscore=0
 maxscore_owner=0
 winscore=int(ships_number/2+1)
-raw_input("Player with "+str(winscore)+" scores wins the game!")
+raw_input("Player with   "+str(winscore)+"   scores wins the game!")
 new_screen()
 #166.#first player to play by roll
 currentplayer=random.randint(1,2)
-print "Game starts with "+player[currentplayer]+"!"
+print "Game starts. First player is   "+player[currentplayer]+"!"
 print
 raw_input("Press ENTER to start!")
 new_screen()
@@ -377,7 +378,7 @@ while winscore>maxscore:
     else:
         currentplayer=1
     print 
-    raw_input("Press ENTERT to continue...")
+    raw_input("Press ENTER to continue...")
     print ("*"*40)
 #382. Exit or Victory + draw text
 new_screen()
@@ -394,3 +395,4 @@ if exit==False:
     new_screen()
 print "Made by Tatcoolx with the great help of Jirotakeo!"
 print ("*"*10)+" Thanks for playing! Goodbye! "+("*"*10)
+raw_input()
