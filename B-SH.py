@@ -22,11 +22,12 @@ shot_kill=[0,0,0]
 #022. takes all digits in str and stacks them.
 def str_to_int(a):
     if len(str(a))==0:
-        print "error, in str_to_int, length=0, 0 returned"
-        return int(str_to_int_output)
+        print "error, in str_to_int, input length=0, 0 returned"
+        str_to_int_output=0
     else:
         if type(a)==int:
-            return a
+            print "error, in str_to_int, input is INT, input returned"
+            str_to_int_output=a
         if type(a)==str:
             str_to_int_output=""
             for i in range(len(str(a))):
@@ -34,8 +35,9 @@ def str_to_int(a):
                     if a[i]==str(b):
                         str_to_int_output+=a[i]
             if len(str(str_to_int_output))==0:
+                print "error, in str_to_int, input contains no digits, 0 returned"
                 str_to_int_output=0
-            return int(str_to_int_output)
+    return int(str_to_int_output)
 #38. bot name generators and lists
 bot_id_pre=["SUPER","SIMPLE","EXTRA","BONUS","EASY","ONE","LONELY","SWEET"]
 bot_id_suf=["CODE","STRING","VIRUS","BRAIN","SCRIPT","GAME"]
